@@ -1,0 +1,6 @@
+{
+  "name": "Craver - Food Delivery",
+  "description": "Full-stack food delivery application with real-time order tracking, multi-role dashboards for Admin, Manager, and Customer, restaurant menus, and payment integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

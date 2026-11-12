@@ -1,0 +1,117 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == "armanhabiba903709@gmail.com" ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin')
+      );
+    }
+
+    function isManagerForRestaurant(restaurantId) {
+      return isSignedIn() && (
+        isAdmin() ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.assignedRestaurantId == restaurantId)
+      );
+    }
+
+    // Connection testing endpoint
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    // Public restaurant catalog (allow read to all; allow initial seeding & authenticated updates)
+    match /restaurants/{restaurantId} {
+      allow read: if true;
+      allow create: if isSignedIn() || !exists(/databases/$(database)/documents/restaurants/$(restaurantId));
+      allow update: if isSignedIn();
+      allow delete: if isAdmin();
+    }
+
+    // Menu items
+    match /menu_items/{itemId} {
+      allow read: if true;
+      allow create: if isSignedIn() || !exists(/databases/$(database)/documents/menu_items/$(itemId));
+      allow update: if isSignedIn();
+      allow delete: if isAdmin();
+    }
+
+    // Discount coupons
+    match /coupons/{couponId} {
+      allow read: if true;
+      allow create: if isSignedIn() || !exists(/databases/$(database)/documents/coupons/$(couponId));
+      allow update, delete: if isSignedIn();
+    }
+
+    // User profiles & addresses
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // Food orders
+    match /orders/{orderId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // Delivery Riders & live location tracking
+    match /riders/{riderId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // Rider earnings & withdrawal payout requests
+    match /rider_payouts/{payoutId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // In-app customer wallet transactions
+    match /wallet_transactions/{txId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // Group food orders
+    match /group_orders/{groupId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // Meal subscription plans
+    match /subscriptions/{subId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // Restaurant table reservations
+    match /table_reservations/{resId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // In-app support tickets
+    match /support_tickets/{ticketId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // Customer reviews & ratings
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // In-app notifications
+    match /notifications/{notificationId} {
+      allow read, write: if isSignedIn();
+    }
+  }
+}

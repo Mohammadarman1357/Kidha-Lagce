@@ -1,0 +1,206 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account information and role assignments",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "manager", "customer", "rider"] },
+        "phone": { "type": "string" },
+        "assignedRestaurantId": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Restaurant": {
+      "title": "Restaurant",
+      "description": "Restaurant details and configuration",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "tagline": { "type": "string" },
+        "description": { "type": "string" },
+        "cuisineTypes": { "type": "string" },
+        "rating": { "type": "number" },
+        "ratingCount": { "type": "number" },
+        "deliveryTimeMinutes": { "type": "number" },
+        "deliveryFee": { "type": "number" },
+        "minOrder": { "type": "number" },
+        "address": { "type": "string" },
+        "city": { "type": "string" },
+        "image": { "type": "string" },
+        "banner": { "type": "string" },
+        "isOpen": { "type": "boolean" },
+        "managerId": { "type": "string" },
+        "featured": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "rating", "deliveryFee"]
+    },
+    "MenuItem": {
+      "title": "MenuItem",
+      "description": "Food item within a restaurant menu",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "restaurantId": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "originalPrice": { "type": "number" },
+        "categoryId": { "type": "string" },
+        "image": { "type": "string" },
+        "isVeg": { "type": "boolean" },
+        "isAvailable": { "type": "boolean" },
+        "rating": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "restaurantId", "name", "price"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer food delivery order",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "restaurantId": { "type": "string" },
+        "restaurantName": { "type": "string" },
+        "subtotal": { "type": "number" },
+        "deliveryFee": { "type": "number" },
+        "tax": { "type": "number" },
+        "discount": { "type": "number" },
+        "total": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "paymentStatus": { "type": "string" },
+        "status": { "type": "string" },
+        "deliveryAddress": { "type": "string" },
+        "deliveryInstructions": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "customerId", "restaurantId", "total", "status", "paymentMethod"]
+    },
+    "Coupon": {
+      "title": "Coupon",
+      "description": "Discount vouchers and promotional codes",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "code": { "type": "string" },
+        "discountType": { "type": "string" },
+        "discountValue": { "type": "number" },
+        "minOrderAmount": { "type": "number" },
+        "maxDiscount": { "type": "number" },
+        "isActive": { "type": "boolean" },
+        "expiresAt": { "type": "string" }
+      },
+      "required": ["id", "code", "discountType", "discountValue"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Customer restaurant and food reviews",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderId": { "type": "string" },
+        "restaurantId": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "restaurantId", "customerId", "rating"]
+    },
+    "Rider": {
+      "title": "Rider",
+      "description": "Rider status, location and profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "vehicleType": { "type": "string" },
+        "isOnline": { "type": "boolean" },
+        "todayEarnings": { "type": "number" }
+      },
+      "required": ["id", "name", "phone"]
+    },
+    "WalletTransaction": {
+      "title": "WalletTransaction",
+      "description": "Customer in-app wallet balance history",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string" },
+        "amount": { "type": "number" },
+        "date": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["id", "userId", "type", "amount"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profiles and credentials"
+    },
+    "/restaurants/{restaurantId}": {
+      "schema": "Restaurant",
+      "description": "Restaurant outlets and metadata"
+    },
+    "/menu_items/{itemId}": {
+      "schema": "MenuItem",
+      "description": "Food menu items"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Placed food orders and delivery status"
+    },
+    "/coupons/{couponId}": {
+      "schema": "Coupon",
+      "description": "Discount coupons"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Restaurant ratings and reviews"
+    },
+    "/riders/{riderId}": {
+      "schema": "Rider",
+      "description": "Rider delivery records"
+    },
+    "/wallet_transactions/{txId}": {
+      "schema": "WalletTransaction",
+      "description": "Wallet transaction records"
+    },
+    "/subscriptions/{subId}": {
+      "schema": "Order",
+      "description": "Subscription meal plans"
+    },
+    "/group_orders/{groupId}": {
+      "schema": "Order",
+      "description": "Group food delivery orders"
+    },
+    "/table_reservations/{resId}": {
+      "schema": "Order",
+      "description": "Table bookings"
+    },
+    "/support_tickets/{ticketId}": {
+      "schema": "Order",
+      "description": "Customer support conversations"
+    },
+    "/rider_payouts/{payoutId}": {
+      "schema": "Order",
+      "description": "Rider earnings withdrawal requests"
+    }
+  }
+}

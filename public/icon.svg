@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="128" fill="#0F1015"/>
+  <circle cx="256" cy="256" r="210" fill="url(#bgGrad)"/>
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF6B35" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FF6B35" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="flameGrad" x1="0%" y1="100%" x2="50%" y2="0%">
+      <stop offset="0%" stop-color="#f4511e"/>
+      <stop offset="50%" stop-color="#FF6B35"/>
+      <stop offset="100%" stop-color="#ffb74d"/>
+    </linearGradient>
+  </defs>
+  <!-- Flame Icon Path -->
+  <path d="M256 96 C270 160 330 200 330 270 C330 330 285 380 225 380 C165 380 120 330 120 270 C120 220 160 170 190 130 C195 180 230 210 240 210 C250 210 260 190 256 96 Z" fill="url(#flameGrad)" />
+  <path d="M256 260 C265 290 280 310 280 335 C280 355 260 370 235 370 C210 370 190 355 190 335 C190 310 210 290 220 275 C225 295 245 305 250 305 C255 305 258 290 256 260 Z" fill="#FFE082" />
+</svg>
