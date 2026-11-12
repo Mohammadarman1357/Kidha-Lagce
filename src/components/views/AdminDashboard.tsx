@@ -252,7 +252,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ restaurants }) =
       </div>
 
       {/* Navigation Tabs */}
-      <div className="flex items-center gap-2 border-b border-[#252838] pb-3">
+      <div className="flex items-center gap-2 border-b border-[#252838] pb-3 overflow-x-auto no-scrollbar whitespace-nowrap flex-nowrap">
         <button
           onClick={() => setActiveTab('overview')}
           className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${

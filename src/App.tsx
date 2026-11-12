@@ -213,23 +213,23 @@ const AppContent: React.FC = () => {
   return (
     <div
       className={`min-h-screen bg-[#0c0d12] text-neutral-100 flex flex-col font-sans transition-all selection:bg-[#FF6B35] selection:text-white ${
-        isAndroidView ? 'py-4 sm:py-8 items-center justify-center bg-black/95' : ''
+        isAndroidView ? 'py-0 sm:py-8 items-center justify-center bg-black/95' : ''
       }`}
     >
       {/* Optional First-Time Splash Screen */}
       {showSplash && <SplashScreen onDismiss={handleDismissSplash} />}
 
-      {/* Android Device Mockup Shell (When Android View is Toggled) */}
+      {/* Android Device Mockup Shell (Adaptive: full-screen on mobile, phone shell on desktop) */}
       <div
         className={
           isAndroidView
-            ? 'w-full max-w-[430px] min-h-[850px] bg-[#0f1015] rounded-[48px] border-[10px] border-[#222432] shadow-[0_0_80px_rgba(0,0,0,0.95)] overflow-hidden flex flex-col relative'
-            : 'w-full flex-1 flex flex-col'
+            ? 'w-full sm:max-w-[430px] sm:min-h-[850px] bg-[#0f1015] sm:rounded-[48px] sm:border-[10px] sm:border-[#222432] sm:shadow-[0_0_80px_rgba(0,0,0,0.95)] overflow-hidden flex flex-col relative min-h-screen sm:min-h-[850px]'
+            : 'w-full flex-1 flex flex-col min-h-screen'
         }
       >
-        {/* Android Native Status Bar Simulation (in Android view) */}
+        {/* Android Native Status Bar Simulation (Desktop Simulator Only) */}
         {isAndroidView && (
-          <div className="bg-[#121318] px-6 py-2 flex items-center justify-between text-[11px] text-neutral-400 font-bold border-b border-[#20222f] select-none">
+          <div className="hidden sm:flex bg-[#121318] px-6 py-2 items-center justify-between text-[11px] text-neutral-400 font-bold border-b border-[#20222f] select-none">
             <span>12:45</span>
             {/* Camera Punch Hole */}
             <div className="w-4 h-4 rounded-full bg-black border border-[#2b2d3d]" />
@@ -263,8 +263,8 @@ const AppContent: React.FC = () => {
           </div>
         )}
 
-        {/* Main Body Content Container */}
-        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        {/* Main Body Content Container with safe bottom navigation padding */}
+        <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-2 sm:pt-4 pb-24 sm:pb-8">
           {renderMainContent()}
         </main>
 
@@ -282,8 +282,8 @@ const AppContent: React.FC = () => {
           </footer>
         )}
 
-        {/* Android Bottom Navigation */}
-        {role === 'customer' && !selectedRestaurant && !trackingOrder && (
+        {/* Mobile Bottom Navigation for all roles */}
+        {!selectedRestaurant && !trackingOrder && (
           <BottomNav
             activeTab={activeTab}
             setActiveTab={setActiveTab}

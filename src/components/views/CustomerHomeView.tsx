@@ -407,8 +407,8 @@ export const CustomerHomeView: React.FC<CustomerHomeViewProps> = ({
         )}
       </div>
 
-      {/* Promotional Banners Carousel */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* Promotional Banners Carousel (Swipeable on mobile, 3-column grid on desktop) */}
+      <div className="flex md:grid md:grid-cols-3 gap-3.5 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory no-scrollbar pb-1">
         {PROMOTIONAL_BANNERS.map((banner) => (
           <div
             key={banner.id}
@@ -420,9 +420,9 @@ export const CustomerHomeView: React.FC<CustomerHomeViewProps> = ({
                 onApplyBannerPromo(banner.code);
               }
             }}
-            className="group relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#1c1e27] to-[#14151d] border border-[#2b2e3e] hover:border-[#FF6B35]/60 shadow-xl cursor-pointer transition-all hover:scale-[1.01]"
+            className="group relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#1c1e27] to-[#14151d] border border-[#2b2e3e] hover:border-[#FF6B35]/60 shadow-xl cursor-pointer transition-all hover:scale-[1.01] shrink-0 w-[82%] sm:w-[55%] md:w-auto snap-center"
           >
-            <div className="h-44 sm:h-48 w-full relative">
+            <div className="h-40 sm:h-48 w-full relative">
               <img
                 src={banner.image}
                 alt={banner.title}
@@ -436,12 +436,12 @@ export const CustomerHomeView: React.FC<CustomerHomeViewProps> = ({
 
               <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
                 <div>
-                  <h3 className="text-base sm:text-lg font-black text-white leading-tight drop-shadow-md">
+                  <h3 className="text-sm sm:text-lg font-black text-white leading-tight drop-shadow-md">
                     {banner.title}
                   </h3>
-                  <p className="text-[11px] text-neutral-300 mt-0.5">{banner.subtitle}</p>
+                  <p className="text-[10px] sm:text-[11px] text-neutral-300 mt-0.5">{banner.subtitle}</p>
                 </div>
-                <span className="px-3 py-1.5 rounded-xl bg-[#FF6B35] text-white text-xs font-bold shrink-0 shadow-lg group-hover:bg-[#ff5722] transition-colors">
+                <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-[#FF6B35] text-white text-[11px] sm:text-xs font-bold shrink-0 shadow-lg group-hover:bg-[#ff5722] transition-colors">
                   {banner.ctaText}
                 </span>
               </div>
@@ -502,13 +502,13 @@ export const CustomerHomeView: React.FC<CustomerHomeViewProps> = ({
         </div>
       </div>
 
-      {/* Filter and Sort Bar */}
-      <div className="bg-[#181922] border border-[#252838] rounded-2xl p-3 flex flex-wrap items-center justify-between gap-3">
+      {/* Filter and Sort Bar (Horizontal scroll on mobile, flex on desktop) */}
+      <div className="bg-[#181922] border border-[#252838] rounded-2xl p-2.5 sm:p-3 flex items-center justify-between gap-3 overflow-x-auto no-scrollbar">
         {/* Pills */}
-        <div className="flex flex-wrap items-center gap-2 text-xs">
+        <div className="flex items-center gap-2 text-xs shrink-0">
           <button
             onClick={() => setFilterRating4Plus(!filterRating4Plus)}
-            className={`px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition-all ${
+            className={`px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition-all shrink-0 cursor-pointer ${
               filterRating4Plus
                 ? 'bg-emerald-600 text-white shadow-md'
                 : 'bg-[#222432] text-neutral-300 hover:bg-[#2b2d3e]'
@@ -520,19 +520,19 @@ export const CustomerHomeView: React.FC<CustomerHomeViewProps> = ({
 
           <button
             onClick={() => setFilterFastDelivery(!filterFastDelivery)}
-            className={`px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition-all ${
+            className={`px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition-all shrink-0 cursor-pointer ${
               filterFastDelivery
                 ? 'bg-[#FF6B35] text-white shadow-md'
                 : 'bg-[#222432] text-neutral-300 hover:bg-[#2b2d3e]'
             }`}
           >
             <Clock className="w-3.5 h-3.5" />
-            <span>Fast (under 30m)</span>
+            <span>Fast (&lt;30m)</span>
           </button>
 
           <button
             onClick={() => setFilterFreeDelivery(!filterFreeDelivery)}
-            className={`px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition-all ${
+            className={`px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition-all shrink-0 cursor-pointer ${
               filterFreeDelivery
                 ? 'bg-emerald-600 text-white shadow-md'
                 : 'bg-[#222432] text-neutral-300 hover:bg-[#2b2d3e]'
@@ -544,12 +544,12 @@ export const CustomerHomeView: React.FC<CustomerHomeViewProps> = ({
         </div>
 
         {/* Sort Dropdown */}
-        <div className="flex items-center gap-2 text-xs">
-          <span className="text-neutral-400 font-medium">Sort by:</span>
+        <div className="flex items-center gap-2 text-xs shrink-0">
+          <span className="text-neutral-400 font-medium hidden sm:inline">Sort by:</span>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
-            className="bg-[#222432] border border-[#2d3042] rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none focus:border-[#FF6B35]"
+            className="bg-[#222432] border border-[#2d3042] rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none focus:border-[#FF6B35] cursor-pointer"
           >
             <option value="popular">Most Popular</option>
             <option value="rating">Highest Rated</option>

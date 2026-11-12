@@ -246,7 +246,7 @@ export const RiderAppView: React.FC = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-[#252838] pb-3">
+      <div className="flex items-center gap-2 border-b border-[#252838] pb-3 overflow-x-auto no-scrollbar whitespace-nowrap flex-nowrap">
         <button
           onClick={() => setActiveTab('radar')}
           className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
